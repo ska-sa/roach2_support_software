@@ -1,0 +1,3 @@
+Required install
+libftdi1
+libftdi-dev

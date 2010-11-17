@@ -1,0 +1,11 @@
+txtfile = 'msr.txt' #name of txt file to be read
+
+f = open(txtfile, 'r+w') #open for read
+
+while True:
+  line = f.readline()
+  if len(line) == 0:  #0 indicates end of file
+    break
+
+  print line,
+  f.close() #close file

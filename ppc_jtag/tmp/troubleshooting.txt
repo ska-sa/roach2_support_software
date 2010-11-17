@@ -1,0 +1,3 @@
+Error: inappropriate permissions on device!
+  Need to change permissions
+  Alternatively just run as root (sudo or su)

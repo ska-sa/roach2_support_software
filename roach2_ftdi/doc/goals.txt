@@ -1,0 +1,47 @@
+High-level goals for FTDI Software
+
+We require python scripts to perform tasks callable from any python script
+The afore-mentioned tasks are those which are required to perform all ROACH2 test
+and configuration operations. These operations would be used for production
+testing, qualification testing, field testing and general board configuration. 
+
+These tasks are grouped by function: JTAG, I2C and GPIO
+
+Generic JTAG Tasks
+--------------------------------
+
+scan_jtag_chain:
+  scans the JTAG chain for devices present. Will return device IDs and chain location
+  for all devices on chain.
+
+Device Specific JTAG Tasks:
+--------------------------------
+
+PPC
+
+ppc_load_program_ram:
+  load a program into ppc memory and run it
+
+FPGA
+
+v6_configure:
+  load a bitstream onto the FPGA
+
+CPLD
+
+cpld_configure:
+  load a JED image onto the CPLD
+
+cpld_erase:
+  erase the contents of the CPLD
+
+...
+
+IIC Tasks
+--------------------------------
+
+iic_probe:
+  lists all the devices on the iic bus
+
+....
+

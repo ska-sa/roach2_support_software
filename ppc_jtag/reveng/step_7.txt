@@ -1,0 +1,491 @@
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  000000000000000000000000001010100
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  000000000000000000000000001010100
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  110100000000000000000000000000000
+DR  [33] TDI:  010100000000000000000000000000000
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  000000000000000000000000001010100
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  000000000000000000000000001010100
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  000000000000000000000000001010100
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  000000000000000000000000001010100
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  110100000000000000000000000000000
+DR  [33] TDI:  010100000000000000000000000000000
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  000000000000000000000000001010100
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  000000000000000000000000001010100
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  000000000000000000000000001010100
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  000000000000000000000000001010100
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  110100000000000000000000000000000
+DR  [33] TDI:  010100000000000000000000000000000
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  000000000000000000000000001010100
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  000000000000000000000000001010100
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  000000000000000000000000001010100
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  000000000000000000000000001010100
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  110100000000000000000000000000000
+DR  [33] TDI:  010100000000000000000000000000000
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  000000000000000000000000001010100
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  000000000000000000000000001010100
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  000000000000000000000000001010100
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  000000000000000000000000001010100
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  110100000000000000000000000000000
+DR  [33] TDI:  010100000000000000000000000000000
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  000000000000000000000000001010100
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  000000000000000000000000001010100
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  000000000000000000000000001010100
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  000000000000000000000000001010100
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  110100000000000000000000000000000
+DR  [33] TDI:  010100000000000000000000000000000
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  000000000000000000000000001010100
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  000000000000000000000000001010100
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  000000000000000000000000001010100
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  000000000000000000000000001010100
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  110100000000000000000000000000000
+DR  [33] TDI:  010100000000000000000000000000000
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  000000000000000000000000001010100
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  000000000000000000000000001010100
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  000000000000000000000000010110100 (debug register read)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  000000000000000000000000010110100 (debug register read)
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  111100000000000010000111010110000 (debug register write e0010eb0) (debug register write e0010eb0)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111111101010100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101001000000000000000000000000001
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  000000000000000000000000010110100 (debug register read)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  000000000000000000000000010110100 (debug register read)
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  111100000000000010000111010110000 (debug register write e0010eb0)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111111101010100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  000000000000000000000000010110100 (debug register read)
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  111111111111110100011011010001000 (debug register write fffa3688)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111111101010100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001010000000001110100110
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  111100000000000010000111010110000 (debug register write e0010eb0)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111111101010100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  000000000000000000000000001010100
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  000000000000000000000000001010100
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  000000000000000000000000010110100 (debug register read)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001000000000000000100110
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  000000000000000000000000010110100 (debug register read)
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  111100000000000010000111010110000 (debug register write e0010eb0)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111111101010100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  000000000000000000000000001010100
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  000000000000000000000000001010100
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  000000000000000000000000010110100 (debug register read)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001000000000000010100110
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  000000000000000000000000010110100 (debug register read)
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  111100000000000010000111010110000 (debug register write e0010eb0)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111111101010100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  000000000000000000000000001010100
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  000000000000000000000000001010100
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  000000000000000000000000010110100 (debug register read)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  000000000000000000000000010110100 (debug register read)
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  111100000000000010000111010110000 (debug register write e0010eb0)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111111101010100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  000000000000000000000000001010100
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  000000000000000000000000001010100
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  000000000000000000000000010110100 (debug register read)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001000000000000010100110
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  000000000000000000000000010110100 (debug register read)
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  111100000000000010000111010110000 (debug register write e0010eb0)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111111101010100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  000000000000000000000000010110100 (debug register read)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  000000000000000000000000010110100 (debug register read)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  000000000000000000000000010110100 (debug register read)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  000000000000000000000000010110100 (debug register read)
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  111100000000000010000111010110000 (debug register write e0010eb0)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111111101010100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  000000000000000000000000010110100 (debug register read)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  000000000000000000000000010110100 (debug register read)
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  111100000000000010000111010110000 (debug register write e0010eb0)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111111101010100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  000000000000000000000000010110100 (debug register read)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  000000000000000000000000010110100 (debug register read)
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  111100000000000010000111010110000 (debug register write e0010eb0)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111111101010100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  000000000000000000000000010110100 (debug register read)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  000000000000000000000000010110100 (debug register read)
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  111100000000000010000111010110000 (debug register write e0010eb0)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111111101010100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  000000000000000000000000010110100 (debug register read)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  000000000000000000000000010110100 (debug register read)
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  111100000000000010000111010110000 (debug register write e0010eb0)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111111101010100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  000000000000000000000000010110100 (debug register read)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  000000000000000000000000010110100 (debug register read)
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  111100000000000010000111010110000 (debug register write e0010eb0)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111111101010100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  000000000000000000000000010110100 (debug register read)
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  100000001001011010000000000000000 (debug write ???)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111111101010100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100101110101110100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  111100000000000010000111010110000 (debug register write e0010eb0)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111111101010100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  000000000000000000000000010110100 (debug register read)
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  111111111111111111111111111111111 (debug register write ffffffff)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111111101010100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001110001110001110100110 (op=xo (extended), XO=mtspr, RT = 1, SPRF = 398 //load special purpose register SPRF(0x398 == DVLIM (WTF)) into register 1 (RT)
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  111100000000000010000111010110000 (debug register write e0010eb0)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111111101010100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  000000000000000000000000010110100 (debug register read)
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  111111111111111111111111111111111 (debug register write ffffffff)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111111101010100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100001110001110100110 (op=xo (extended), XO=mtspr, RT = 1, SPRF = 398 //load special purpose register SPRF(0x390 == DCACHELIM) into register 1 (RT))
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  111100000000000010000111010110000 (debug register write e0010eb0)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111111101010100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  000000000000000000000000010110100 (debug register read)
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  111111111111111111111111111111111 (debug register write ffffffff)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111111101010100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100011110001110100110
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  111100000000000010000111010110000 (debug register write e0010eb0)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111111101010100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  000000000000000000000000010110100 (debug register read)
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  111111111111111111111111111111111 (debug register write 0xffffffff)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111111101010100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100101110001110100110
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  111100000000000010000111010110000 (debug register write e0010eb0)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111111101010100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  000000000000000000000000010110100 (debug register read)
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  111111111111111111111111111111111 (debug register write ???)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111111101010100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111110001110100110
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  111100000000000010000111010110000 (debug register write e0010eb0)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111111101010100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  111111111111110100011011010000100 (debug register write ???)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111111101010100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  110000100000000010000000000000100
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  000000000000000000000000010110100 (debug register read)
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  000000000000000000000000001010100
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  000000000000000000000000010110100 (debug register read)
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  100000000000000000000000000000000 (debug register write)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111111101010100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001000000000000100100100
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  111111111111110100011011010001000 (debug register write fffa3688)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111111101010100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  000000000000000000000000010110100 (debug register read)
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  100000001011011010000000000000000 (debug register write)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111111101010100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100101110101110100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  111111111111110100011011010001000 (debug register write fffa3688)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111111101010100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  000000000000000000000000010110100 (debug register read)
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  100000000000000011111100000000000 (debug register write???)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111111101010100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001110001110001110100110
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  111111111111110100011011010001000 (debug register write fffa3688)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111111101010100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  000000000000000000000000010110100 (debug register read)
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  100101101001010010010100000101010 (debug register write ???)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111111101010100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100001110001110100110 (op=xo (extended), XO=mtspr, RT = 1, SPRF = 398 //load special purpose register SPRF(0x390 == DCACHELIM) into register 1 (RT))
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  111111111111110100011011010001000 (debug register write fffa3688)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111111101010100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  000000000000000000000000010110100 (debug register read)
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  100101001001001100010011000100101 (debug register write 29262625)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111111101010100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100011110001110100110
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  111111111111110100011011010001000 (debug register write fffa3688)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111111101010100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  000000000000000000000000010110100 (debug register read)
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  100101000001001100010011000101000 (debug register write ???)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111111101010100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100101110001110100110
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  111111111111110100011011010001000 (debug register write fffa3688)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111111101010100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [1] TDI:  1
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  000000000000000000000000010110100 (debug register read)
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  100100111001001100010100000101000 (debug write ???)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111111101010100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111110001110100110
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  111111111111110100011011010001000 (debug register write fffa3688)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111111101010100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  111111111111110100011011010001000 (debug register write fffa3688)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100000100111111101010100110
+IR  [8] TDI:  10110100 (debug register)
+DR  [33] TDI:  111100000000000010000111010110000 (debug register write e0010eb0)
+IR  [8] TDI:  01110100 (run instruction)
+DR  [33] TDI:  101111100001100111111101010100110 (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  000000000000000000000000001010100
+IR  [8] TDI: 01010100 (PPC mode register)
+DR  [33] TDI:  000000000000000000000000001010100

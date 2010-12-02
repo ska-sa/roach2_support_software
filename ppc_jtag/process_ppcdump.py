@@ -73,6 +73,24 @@ class PPCDump(object):
     PAUSE_IR         = 13
     EXIT2_IR         = 14
     UPDATE_IR        = 15
+    state_strings = [
+                     "TEST_LOGIC_RESET",
+                     "RUN_TEST_IDLE",
+                     "SELECT_DR_SCAN",
+                     "CAPTURE_DR",
+                     "SHIFT_DR",
+                     "EXIT1_DR",
+                     "PAUSE_DR",
+                     "EXIT2_DR",
+                     "UPDATE_DR",
+                     "SELECT_IR_SCAN",
+                     "CAPTURE_IR",
+                     "SHIFT_IR",
+                     "EXIT1_IR",
+                     "PAUSE_IR",
+                     "EXIT2_IR",
+                     "UPDATE_IR"
+                    ]
 
     prev_state = 0;
     state = init_state
@@ -90,10 +108,9 @@ class PPCDump(object):
 
       if self.halt[index] != prev_halt :
         #default is set
-        event = [2, 0, 0];
-        if (self.halt(index)) :
-          #cleared (active low)
-          event = [3, 0, 0];
+        event = [3, 0, 0];
+        if (self.halt[index]) :
+          event = [2, 0, 0];
 
         self.r_tags.append(event);
       prev_halt = self.halt[index]
@@ -211,6 +228,7 @@ class PPCDump(object):
         print 'error: invalid state'
         return;
 
+      #print "DEBUG: cstate = %s, nstate = %s, tms = %d"%(state_strings[state_before], state_strings[state], tms)
       prev_state = state_before
       index += 1
       madness = current_tag
@@ -224,20 +242,21 @@ class PPCDump(object):
         print 'IR ',
       elif (ctag[0] == 2) :
         print 'HALT SET'
-        break
+        continue
       elif (ctag[0] == 3) :
         print 'HALT CLEARED'
-        break
+        continue
       elif (ctag[0] == 4) :
         print 'TRST SET'
-        break
+        continue
       elif (ctag[0] == 5) :
         print 'TRST CLEARED'
-        break
+        continue
       elif (ctag[0] == 6) :
         print 'JTAG LOGIC RESET'
-        break
+        continue
       else: 
+        print 'Unknown tag'
         break
 
       s=''
@@ -253,17 +272,18 @@ class PPCDump(object):
         print 'IR ',
       elif (ctag[0] == 2) :
         print 'HALT SET'
-        break
+        continue
       elif (ctag[0] == 3) :
         print 'HALT CLEARED'
-        break
+        continue
       elif (ctag[0] == 4) :
         print 'TRST SET'
-        break
+        continue
       elif (ctag[0] == 5) :
         print 'TRST CLEARED'
-        break
+        continue
       else: 
+        print 'Unknown tag'
         break
 
       print '[%d]'%(ctag[2]-ctag[1] + 1)
@@ -276,7 +296,7 @@ class PPCDump(object):
 
       print 'TDO: ', 
       s=''
-      for val in self.tdo[ctag[1]+1:ctag[2]+2] :
+      for val in self.tdo[ctag[1]+0:ctag[2]+1] :
         s+='%d'%(val)
       print '%s'%(reverse(s))
 
@@ -322,7 +342,8 @@ ppcdump.parse_csv_file(fid)
 
 ppcdump.tag_r_ops()
 
-ppcdump.dump_ops_in()
+#ppcdump.dump_ops_in()
+ppcdump.dump_ops_full()
 
 fid.close()
 

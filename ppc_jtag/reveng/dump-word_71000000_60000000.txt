@@ -57,6 +57,7 @@ IR  [8] TDI:  10110100 (debug register)
 DR  [33] TDI:  100000001010001000000000000000000 (write data = 0x01440000 into debug register)
 IR  [8] TDI:  01110100 (Run instruction)
 DR  [33] TDI:  101111100001100111111101010100110  (op=xo (extended), XO=mfspr, RT = 1, SPRF = 639 //load special purpose register SPRF(0x3f3 == data debug register) into register 1 (RT)
+                01111100001100111111101010100110
 IR  [8] TDI:  10110100 (debug register)
 DR  [33] TDI:  101110000111111111111111111111100 ((ADDRESS - 1 <<) 2) (?load data into data debug register?)
 IR  [8] TDI:  01110100 (Run instruction)

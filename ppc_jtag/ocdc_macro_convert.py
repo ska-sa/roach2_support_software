@@ -37,17 +37,30 @@ PPCMODE_STEP1 = "010100000000000000000000000000000"
 
 PPCDBGR_READ = "000000000000000000000000010110100"
 
+PPC_MMUSETUP = 0x01040000
+
 ''' Instuction Dictionaries '''
+
 MAJ_OPCODE = {'xtend': 31,
-              'addis': 15}
+              'xtendl': 19,
+              'addis': 15,
+              'stwu': 37,
+              'ori': 24,
+              'lwz': 32}
+
 EXT_OPCODE = {'mfspr': 339,
-              'mtspr': 475,
+              'mtspr': 467,
               'mfmsr': 83,
               'mtmsr': 146,
-              'tlbwe': 978}
-SPRF = {'dbdr': 0x3f3, # data debug register 
-        'mmucr': 0x3b2} # mmu control register
+              'tlbwe': 978,
+              'bclr': 16}
 
+SPRF = {'dbdr': 0x3f3, # data debug register 
+        'mmucr': 0x3b2, # mmu control register
+        'lr': 0x08} # Link register control register
+
+# TODO: global optimization, dont change ppc insturction if dont need to 
+# TODO: need to restore registers that are changed (ie MSR, MMU, LR...)
 
 ''' Misc functions '''
 
@@ -80,6 +93,15 @@ def gen_xform_inst(opcode, XO, regmaj, regmid, regmin, rc=0):
                   (rc & 0x1)
                  )
 
+def gen_xlform_inst(opcode, XO, regmaj, regmid, regmin, lk=0):
+  return int2bin( ((opcode & 0x3f) << 26) |
+                  ((regmaj & 0x1f) << 21) |
+                  ((regmid & 0x1f) << 16) |
+                  ((regmin & 0x1f) << 11) |
+                  ((XO & 0x3ff) << 1) | 
+                  (lk & 0x1)
+                 )
+
 def gen_xfxform_inst(opcode, XO, regmaj, sprf):
   # sprf is split into two parts, swapped
   return int2bin( ((opcode & 0x3f) << 26) |
@@ -90,6 +112,24 @@ def gen_xfxform_inst(opcode, XO, regmaj, sprf):
                  )
 
 ''' Common PPC Tasks '''
+
+def ppc_set_pc(addr, reg):
+  # write the value into the debug register
+  print "instruction PPCDBGR"
+  print "shift ir"
+  print "dr 1%s"%(int2bin(addr,32))
+  print "shift dr"
+  # load the value from the debug register into ppc register
+  print "instruction PPCINST"
+  print "shift ir"
+  print "dr 1%s"%(gen_xfxform_inst(MAJ_OPCODE['xtend'], EXT_OPCODE['mfspr'], reg, SPRF['dbdr']))
+  print "shift dr"
+  # load the value from the ppc register to the link register
+  print "dr 1%s"%(gen_xfxform_inst(MAJ_OPCODE['xtend'], EXT_OPCODE['mtspr'], reg, SPRF['lr']))
+  print "shift dr"
+  # branch to location in lr
+  print "dr 1%s"%(gen_xlform_inst(MAJ_OPCODE['xtendl'], EXT_OPCODE['bclr'], 20, 0, 0, 0))
+  print "shift dr"
 
 def ppc_tlb_write(val, tlbindex, reg):
   for i in range(0,3):
@@ -138,14 +178,37 @@ def ppc_set_spr(spr, value, reg):
   print "dr 1%s"%(gen_xfxform_inst(MAJ_OPCODE['xtend'], EXT_OPCODE['mfspr'], reg, SPRF['dbdr']))
   print "shift dr"
   # load the value from the debug register into ppc register
-  print "instruction PPCINST"
-  print "shift ir"
   print "dr 1%s"%(gen_xfxform_inst(MAJ_OPCODE['xtend'], EXT_OPCODE['mtspr'], reg, spr))
   print "shift dr"
 
+def ppc_load_mem_to_reg(address, reg_addr, reg_data):
+  print "shift ir"
+  print "dr 1%s"%(gen_dform_inst(MAJ_OPCODE['addis'], reg_addr, 0, (address & 0xffff0000) >> 16))
+  print "shift dr"
+  print "dr 1%s"%(gen_dform_inst(MAJ_OPCODE['ori'], reg_addr, reg_addr, (address & 0xffff)))
+  print "shift dr"
+  print "dr 1%s"%(gen_dform_inst(MAJ_OPCODE['lwz'], reg_data, 0, 0))
+  print "shift dr"
+
+
+def ppc_load_reg_to_mem(reg_addr, reg_data, address):
+  value = address
+  print "instruction PPCINST"
+  print "shift ir"
+  print "dr 1%s"%(gen_dform_inst(MAJ_OPCODE['addis'], reg_addr, 0, (value & 0xffff0000) >> 16))
+  print "shift dr"
+  print "dr 1%s"%(gen_dform_inst(MAJ_OPCODE['ori'], reg_addr, reg_addr, (value & 0xffff)))
+  print "shift dr"
+  print "dr 1%s"%(gen_dform_inst(MAJ_OPCODE['stwu'], reg_data, reg_addr, 0x0))
+  print "shift dr"
+
+  
+  
 def ppc_set_cpu_reg(value, reg):
   value_bin = int2bin(value,32)
   reg_bin = int2bin(reg,5)
+  """
+  # This code not the optimal solution
   # write the value into the debug register
   print "instruction PPCDBGR"
   print "shift ir"
@@ -156,6 +219,17 @@ def ppc_set_cpu_reg(value, reg):
   print "shift ir"
   print "dr 1%s"%(gen_xfxform_inst(MAJ_OPCODE['xtend'], EXT_OPCODE['mfspr'], reg, SPRF['dbdr']))
   print "shift dr"
+  """
+
+  print "instruction PPCINST"
+  print "shift ir"
+  print "dr 1%s"%(gen_dform_inst(MAJ_OPCODE['addis'], reg, 0, (value & 0xffff0000) >> 16))
+  print "shift dr"
+  print "dr 1%s"%(gen_dform_inst(MAJ_OPCODE['ori'], reg, reg, (value & 0xffff)))
+  print "shift dr"
+  print "#debug reg set"
+  ppc_get_cpu_reg(reg)
+
 
 def ppc_get_cpu_reg(reg):
   reg_bin = int2bin(reg,5)
@@ -169,7 +243,12 @@ def ppc_get_cpu_reg(reg):
   print "shift ir"
   print "dr %s"%(PPCDBGR_READ)
   print "shift dr"
+  print "value"
   print "dr"
+
+def ppc_setup_mmu(reg):
+  ppc_set_spr(SPRF['mmucr'], PPC_MMUSETUP, reg)
+
 
 ''' macro equivalent operations '''
 
@@ -179,37 +258,39 @@ def init_jtag():
   print "register R_PPCMODE %d"%(JTAGD_LENGTH)
   print "register R_PPCINST %d"%(JTAGD_LENGTH)
   print "register R_PPCDBGR %d"%(JTAGD_LENGTH)
-  print "intruction length %d"%(JTAGI_LENGTH)
+  print "instruction length %d"%(JTAGI_LENGTH)
   print "instruction PPCMODE %s R_PPCMODE"%(JTAGI_PPCMODE)
   print "instruction PPCINST %s R_PPCINST"%(JTAGI_PPCINST)
   print "instruction PPCDBGR %s R_PPCDBGR"%(JTAGI_PPCDBGR)
 
 def run_reset(command, args):
   # first clear the halt flag, wait a bit then set it
-  print "pod reset=1"
-  print "usleep 10000"
-  print "pod reset=0"
+  print "pod RESET=0"
 
   # select the PPCMODE instruction
   print "instruction PPCMODE"
   # load instruction
-  print "ir"
+  print "shift ir"
   print "dr %s"%(PPCMODE_INIT0)
   print "shift dr"
+  print "shift ir"
   print "dr %s"%(PPCMODE_INIT1)
   print "shift dr"
 
   # clear the halt flag
   print "pod reset=1"
 
+  print "shift ir"
   print "dr %s"%(PPCMODE_INIT2)
   print "shift dr"
   print "dr %s"%(PPCMODE_INIT3)
   print "shift dr"
+  print "shift ir"
   print "dr %s"%(PPCMODE_SYNC)
   print "shift dr"
 
   # TODO: setup/store MMU
+  ppc_setup_mmu(1)
 
 
 def run_wtlb(command, args):
@@ -232,7 +313,16 @@ def run_wtlb(command, args):
   ppc_tlb_write(val,tlb_index,1)
 
 def run_pc(command, args):
-  print "#(TO BE IMPLEMENTED) - %s %s"%(command,args)
+  print "#%s %s"%(command,args)
+  raw=args.lower()
+  if (raw == ""):
+    print "fixme: pc read not implemented"
+    return;
+
+
+  addr = hex2dec(raw)
+
+  ppc_set_pc(addr, 1)
 
 def run_msr(command, args):
   print "#%s %s"%(command,args)
@@ -257,11 +347,51 @@ def run_cpu(command, args):
   print "#(NOT IMPLEMENTED) - %s %s"%(command,args)
 
 def run_word(command, args):
-  print "#(TO BE IMPLEMENTED) - %s %s"%(command,args)
+  print "#%s %s"%(command,args)
+  raw=args.lower()
+  parts=raw.partition(' = ')
+
+  if (parts[2] == ""):
+    ppc_load_mem_to_reg(hex2dec(parts[0]),2,1)
+    ppc_get_cpu_reg(2)
+    print "echofoo"
+    ppc_get_cpu_reg(1)
+    print "echobar"
+    return
+  
+  address = hex2dec(parts[0])
+  data = hex2dec(parts[2])
+
+  ppc_set_cpu_reg(data, 0)
+
+  ppc_load_reg_to_mem(1, 0, address)
+
 
 def run_go(command, args):
-  # TODO: clear MSR
-  print command
+  # select the PPCMODE instruction
+  print "# %s %s"%(command,args)
+  print "instruction PPCMODE"
+  # perform magic sequence
+
+  print "shift ir"
+  print "dr %s"%(PPCMODE_SYNC)
+  print "shift dr"
+  print "shift ir"
+  print "dr %s"%(PPCMODE_SYNC)
+  print "shift dr"
+
+  print "shift ir"
+  print "dr %s"%(PPCMODE_GO0)
+  print "shift dr"
+  print "dr %s"%(PPCMODE_GO1)
+  print "shift dr"
+
+  print "shift ir"
+  print "dr %s"%(PPCMODE_SYNC)
+  print "shift dr"
+  print "shift ir"
+  print "dr %s"%(PPCMODE_SYNC)
+  print "shift dr"
 
 def run_exit(command, args):
   #this command does nothing

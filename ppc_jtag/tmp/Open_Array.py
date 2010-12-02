@@ -33,6 +33,5 @@ def open_file_to_array(in_file):
 if __name__ == '__main__':
   input_file = 'temp_file.csv'
   data_dictionary = open_file_to_array(input_file)
-  print data_dictionary
   
   #endof main

@@ -4,8 +4,9 @@ import sys
 
 '''  urJTAG defines '''
 
-URJTAG_PROGRAMMER = "jtagkey"
+URJTAG_PROGRAMMER = "jtagkey vid=0403 pid=6011"
 URJTAG_PROGRAMMER_PARAMETERS = ""
+BSDL_PATH = "/home/dave/work/svnROACH2/testing/bsdl"
 
 ''' PPC JTAG defines '''
 
@@ -22,11 +23,13 @@ JTAGI_PPCDBGR = "10110100"
 
 ''' PPC JTAG magic strings '''
 
+# Hmmm, could this possible be SPR 'dbcr0?'
 PPCMODE_INIT0 = "110111000000000000000000000000000"
 PPCMODE_INIT1 = "110000000000000000000000000000000"
 PPCMODE_INIT2 = "110000000000000000000000000000000"
 PPCMODE_INIT3 = "010000000000000000000000000000000"
 
+# Hmmm, that would make sense except for below'
 PPCMODE_SYNC = "000000000000000000000000001010100"
 
 PPCMODE_GO0  = "100000000000000000000000000000000"
@@ -227,8 +230,6 @@ def ppc_set_cpu_reg(value, reg):
   print "shift dr"
   print "dr 1%s"%(gen_dform_inst(MAJ_OPCODE['ori'], reg, reg, (value & 0xffff)))
   print "shift dr"
-  print "#debug reg set"
-  ppc_get_cpu_reg(reg)
 
 
 def ppc_get_cpu_reg(reg):
@@ -243,7 +244,6 @@ def ppc_get_cpu_reg(reg):
   print "shift ir"
   print "dr %s"%(PPCDBGR_READ)
   print "shift dr"
-  print "value"
   print "dr"
 
 def ppc_setup_mmu(reg):
@@ -254,6 +254,8 @@ def ppc_setup_mmu(reg):
 
 def init_jtag():
   print "cable %s %s"%(URJTAG_PROGRAMMER,URJTAG_PROGRAMMER_PARAMETERS)
+  if (BSDL_PATH != "") :
+    print "bsdl path %s"%(BSDL_PATH)
   print "detect"
   print "register R_PPCMODE %d"%(JTAGD_LENGTH)
   print "register R_PPCINST %d"%(JTAGD_LENGTH)

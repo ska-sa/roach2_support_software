@@ -29,6 +29,8 @@ PPCMODE_INIT1 = "110000000000000000000000000000000"
 PPCMODE_INIT2 = "110000000000000000000000000000000"
 PPCMODE_INIT3 = "010000000000000000000000000000000"
 
+PPCMODE_DEBUG_EXTERNAL = "110000000000000000000000000000000"
+
 # Hmmm, that would make sense except for below'
 PPCMODE_SYNC = "000000000000000000000000001010100"
 
@@ -167,6 +169,14 @@ def ppc_set_msr(value, reg):
   print "dr 1%s"%(gen_xfxform_inst(MAJ_OPCODE['xtend'], EXT_OPCODE['mtmsr'], reg, 0))
   print "shift dr"
 
+def ppc_fetch_spr(spr, datareg):
+
+  #load selected spr into datareg
+  print "instruction PPCINST"
+  print "shift ir"
+  print "dr 1%s"%(gen_xfxform_inst(MAJ_OPCODE['xtend'], EXT_OPCODE['mfspr'], datareg, spr))
+  print "shift dr"
+
 def ppc_set_spr(spr, value, reg):
   value_bin = int2bin(value,32)
   reg_bin = int2bin(reg,5)
@@ -185,12 +195,13 @@ def ppc_set_spr(spr, value, reg):
   print "shift dr"
 
 def ppc_load_mem_to_reg(address, reg_addr, reg_data):
+  print "instruction PPCINST"
   print "shift ir"
   print "dr 1%s"%(gen_dform_inst(MAJ_OPCODE['addis'], reg_addr, 0, (address & 0xffff0000) >> 16))
   print "shift dr"
   print "dr 1%s"%(gen_dform_inst(MAJ_OPCODE['ori'], reg_addr, reg_addr, (address & 0xffff)))
   print "shift dr"
-  print "dr 1%s"%(gen_dform_inst(MAJ_OPCODE['lwz'], reg_data, 0, 0))
+  print "dr 1%s"%(gen_dform_inst(MAJ_OPCODE['lwz'], reg_data, reg_addr, 0))
   print "shift dr"
 
 
@@ -244,6 +255,7 @@ def ppc_get_cpu_reg(reg):
   print "shift ir"
   print "dr %s"%(PPCDBGR_READ)
   print "shift dr"
+  print "reading register %d"%(reg)
   print "dr"
 
 def ppc_setup_mmu(reg):
@@ -264,6 +276,24 @@ def init_jtag():
   print "instruction PPCMODE %s R_PPCMODE"%(JTAGI_PPCMODE)
   print "instruction PPCINST %s R_PPCINST"%(JTAGI_PPCINST)
   print "instruction PPCDBGR %s R_PPCDBGR"%(JTAGI_PPCDBGR)
+
+def run_halt(command, args):
+  # first clear the halt flag, wait a bit then set it
+  print "pod RESET=0"
+
+  # select the PPCMODE instruction
+  print "instruction PPCMODE"
+  # load instruction
+  print "shift ir"
+  print "dr %s"%(PPCMODE_DEBUG_EXTERNAL)
+  print "shift dr"
+
+  # clear the halt flag
+  print "pod reset=1"
+
+  print "shift ir"
+  print "dr %s"%(PPCMODE_DEBUG_EXTERNAL)
+  print "shift dr"
 
 def run_reset(command, args):
   # first clear the halt flag, wait a bit then set it
@@ -348,17 +378,40 @@ def run_msr(command, args):
 def run_cpu(command, args):
   print "#(NOT IMPLEMENTED) - %s %s"%(command,args)
 
+def run_spr(command, args):
+  print "#%s %s"%(command,args)
+  raw=args.lower()
+  parts=raw.partition(' = ')
+
+  if (parts[2] == ""):
+    # spr to get
+    spr = hex2dec(parts[0])
+    # register to store the spr that is fetched
+    reg_data = 1
+    ppc_fetch_spr(spr, reg_data)
+    ppc_get_cpu_reg(reg_data)
+    return
+  
+  spr = hex2dec(parts[0])
+  data = hex2dec(parts[2])
+
+  ppc_set_spr(spr, data, 1)
+
+
 def run_word(command, args):
   print "#%s %s"%(command,args)
   raw=args.lower()
   parts=raw.partition(' = ')
 
   if (parts[2] == ""):
-    ppc_load_mem_to_reg(hex2dec(parts[0]),2,1)
-    ppc_get_cpu_reg(2)
-    print "echofoo"
-    ppc_get_cpu_reg(1)
-    print "echobar"
+    # address of data to fetch
+    address = parts[0]
+    # register to load the address to fetch
+    reg_addr = 2
+    # register to store the data that is fetched
+    reg_data = 1
+    ppc_load_mem_to_reg(hex2dec(parts[0]),reg_addr,reg_data)
+    ppc_get_cpu_reg(reg_data)
     return
   
   address = hex2dec(parts[0])
@@ -429,6 +482,7 @@ operation_map = [
     ["wtlb",  run_wtlb],
     ["pc",    run_pc],
     ["msr",   run_msr],
+    ["spr",   run_spr],
     ["cpu",   run_cpu],
     ["word",  run_word],
     ["go",    run_go],

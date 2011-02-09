@@ -1,0 +1,1015 @@
+--  --------------------------------------------------------------------------------
+--  IBMDFT_1149_1_1998_V5   VHDL Package and Package Body in support of the
+--                          IBM DFT-inserted boundary cells.
+--
+-- DESCRIPTION :
+--   This package file defines the cell definitions for the IEEE 1149.1
+--   boundary cells that are supported by IBM DFT Synthesis. The cells are
+--   defined in the IBM ASIC Application Note SA14-2282-05: IEEE 1149.1 Boundary
+--   Scan in IBM ASICS (Version 5).
+--
+--   The cell names beginning with BAL_BSR_* are identical to their BSR_*
+--   counterparts, except that they incorporate a balance NAND multiplexor (MUX)
+--   function in the system data path.
+--
+--   Technology Mapped/Dependent Cell Definitions begin with:  'BSR_'
+--   Technology Mapped/Dependent Balanced-MUX Cell Definitions begin with:  'BAL_BSR_'
+-- -----------------------------------------------------------------------------
+---------------------------------------------------------------------------
+--
+--  Please direct all inquiries regarding this file to you local FAE
+--
+--  Copyright 2006, IBM. All Rights Reserved
+--
+---------------------------------------------------------------------------
+--
+-- This information is for modeling purposes only, and is not guaranteed.
+--
+-- The following are trademarks of International Business Machines
+-- Corporation in the United States, or other countries, or both:
+--
+--  IBM   IBM Logo   PowerPC   PowerPC Logo
+--
+-- Other company, product and service names may be trademarks or
+-- service marks of others.
+--
+-- THIS INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY
+-- KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION,
+-- THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+-- PARTICULAR PURPOSE, AND NON-INFRINGEMENT.  SOME JURISDICTIONS
+-- DO NOT ALLOW THE EXCLUSION OF IMPLIED WARRANTIES, SO THE
+-- ABOVE EXCLUSION MAY NOT APPLY TO YOU.
+--
+-- This Information may contain technical inaccuracies or
+-- typographical errors. IBM reserves the right to modify or
+-- withdraw this information at any time without notice.
+-- All information contained in this document was obtained in 
+-- specific environments, and is presented as an illustration. 
+-- The results obtained in other operating environments may vary.	
+--
+-- IN NO EVENT WILL IBM BE LIABLE TO ANY PARTY FOR ANY DIRECT,
+-- INDIRECT, SPECIAL OR CONSEQUENTIAL DAMAGES FOR ANY USE OF
+-- THIS INFORMATION, INCLUDING, WITHOUT LIMITATION, ANY LOST
+-- PROFITS, BUSINESS INTERRUPTION, LOSS OF PROGRAMS OR OTHER
+-- DATA ON YOUR INFORMATION HANDLING SYSTEM OR OTHERWISE, EVEN
+-- IF WE ARE EXPRESSLY ADVISED OF THE POSSIBILITY OF SUCH
+-- DAMAGES.
+--
+-- The information contained in this document is subject to 
+-- change without notice. The information contained in this 
+-- document does not affect or change IBM's product specification
+-- or warranties. Nothing in this document shall operate as an 
+-- express or implied license or indemnity under the intellectual
+-- property rights of IBM or third parties.
+--
+----
+-- ReleaseDate=04/05/21 ReleaseTime=16:36:00
+-- ---------------------------------------------------------------------------------
+--  Change History:
+--  01/08/01 - Gary Kunselman, IBM Burlington.  Modified package IBMDFT_1149_1_1998
+--             for Version 5 support.
+--  03/20/01 - GLK, Change (BAL_)BSR_OUT_NT(_CLAMP)(OUTPUT2/3, EXTEST) capture data
+--             from UPD to PO.
+--  08/14/01 - GLK, Removed all INTEST entries where it is unsupported.
+--  10/26/01 - GLK, Added support for INLINE BSRs, removed _CLAMP cells.
+--  05/22/02 - GLK, Added support for High-speed I/O (HSIO) BSRs.
+--  01/23/04 - GLK, Added OBSERVE_ONLY function for Observe-only cells.
+--  03/08/04 - GLK, Added support for LC Tank PLL boundary scan cells.
+--  05/21/04 - GLK, Added support for HSS, HT boundary scan cells.
+-- ---------------------------------------------------------------------------------
+
+package IBMDFT_1149_1_1998_V5 is
+
+ use STD_1149_1_1994.all;          -- Get definition of "Cell_Info"
+
+  -- Boundary Cell deferred constants (see package body)
+
+      -- Appendix A
+  constant BSR_IN_NT                 : CELL_INFO;
+  constant BSR_IN0_NT                : CELL_INFO;
+  constant BSR_IN1_NT                : CELL_INFO;
+  constant BSR_IN_SIO                : CELL_INFO;
+  constant BSR_IN_TI                 : CELL_INFO;
+  constant BSR_CLKIN                 : CELL_INFO;
+  constant BSR_CLKIN4                : CELL_INFO;
+  constant BSR_OUT_NT                : CELL_INFO;
+  constant BSR_OUT_TI                : CELL_INFO;
+  constant BSR_OUT_TO                : CELL_INFO;
+  constant BSR_OUT_TO_OO             : CELL_INFO;
+  constant BSR_BIDIR                 : CELL_INFO;
+  constant BSR_BIDIR_TI              : CELL_INFO;
+  constant BSR_BIDIR_TO              : CELL_INFO;
+  constant BSR_BIDIR_TO_OO           : CELL_INFO;
+  constant BSR_ENAB_NT               : CELL_INFO;
+  constant BSR_ENABR_NT              : CELL_INFO;
+
+      -- Observe-only Boundary Scan Cells
+  constant BSR_IN_NT_OBS             : CELL_INFO;
+  constant BSR_IN_OBS                : CELL_INFO;
+  constant BSR_BIDIR_OBS             : CELL_INFO;
+  constant BSR_BIDIR_TO_OBS          : CELL_INFO;
+  constant BSR_BIDIR_TO_OO_OBS       : CELL_INFO;
+
+      -- Dummy Boundary Scan Cell
+  constant BSR_DUMMY                         : CELL_INFO;
+
+      -- Balanced MUX BSRs
+  constant BAL_BSR_IN_NT                     : CELL_INFO;
+  constant BAL_BSR_IN0_NT                    : CELL_INFO;
+  constant BAL_BSR_IN1_NT                    : CELL_INFO;
+  constant BAL_BSR_IN_SIO                    : CELL_INFO;
+  constant BAL_BSR_IN_TI                     : CELL_INFO;
+  constant BAL_BSR_OUT_NT                    : CELL_INFO;
+  constant BAL_BSR_OUT_TI                    : CELL_INFO;
+  constant BAL_BSR_OUT_TO                    : CELL_INFO;
+  constant BAL_BSR_OUT_TO_OO                 : CELL_INFO;
+  constant BAL_BSR_ENAB_NT                   : CELL_INFO;
+  constant BAL_BSR_ENABR_NT                  : CELL_INFO;
+  constant BAL_BSR_BIDIR                     : CELL_INFO;
+  constant BAL_BSR_BIDIR_TI                  : CELL_INFO;
+  constant BAL_BSR_BIDIR_TO                  : CELL_INFO;
+  constant BAL_BSR_BIDIR_TO_OO               : CELL_INFO;
+  constant BAL_BSR_BIDIR_OBS                 : CELL_INFO;
+  constant BAL_BSR_BIDIR_TO_OBS              : CELL_INFO;
+  constant BAL_BSR_BIDIR_TO_OO_OBS           : CELL_INFO;
+
+
+      -- Inline BSRs
+  constant INLINE_BSR_IN_NT                  : CELL_INFO;
+  constant INLINE_BSR_IN0_NT                 : CELL_INFO;
+  constant INLINE_BSR_IN1_NT                 : CELL_INFO;
+  constant INLINE_BSR_IN_SIO                 : CELL_INFO;
+  constant INLINE_BSR_IN_TI                  : CELL_INFO;
+  constant INLINE_BSR_OUT_NT                 : CELL_INFO;
+  constant INLINE_BSR_OUT_TI                 : CELL_INFO;
+  constant INLINE_BSR_BIDIR                  : CELL_INFO;
+  constant INLINE_BSR_BIDIR_TI               : CELL_INFO;
+  constant INLINE_BSR_BIDIR_TO               : CELL_INFO;
+  constant INLINE_BSR_BIDIR_TO_OO            : CELL_INFO;
+  constant INLINE_BSR_ENAB_NT                : CELL_INFO;
+  constant INLINE_BSR_ENABR_NT               : CELL_INFO;
+  constant INLINE_BSR_BIDIR_OBS              : CELL_INFO;
+
+
+      -- High-spped I/O BSRs
+  constant HSIO_BSR_IN_NT                  : CELL_INFO;
+  constant HSIO_BSR_IN_SIO                 : CELL_INFO;
+  constant HSIO_BSR_CLKIN                  : CELL_INFO;
+  constant HSIO_BSR_OUT_NT                 : CELL_INFO;
+  constant HSIO_BSR_OUT_TI                 : CELL_INFO;
+  constant HSIO_BSR_OUT_TO                 : CELL_INFO;
+  constant HSIO_BSR_OUT_TO_OO              : CELL_INFO;
+  constant HSIO_BSR_BIDIR                  : CELL_INFO;
+  constant HSIO_BSR_BIDIR_TO               : CELL_INFO;
+  constant HSIO_BSR_BIDIR_TO_OO            : CELL_INFO;
+
+
+      -- LC Tank PLL I/O BSRs
+  constant LCPLL_BSR_IN_SIO                : CELL_INFO;
+  constant LCPLL_BSR_CLKIN                 : CELL_INFO;
+
+      -- HSS I/O BSRs
+  constant HSS_BSR_IN_NT                   : CELL_INFO;
+  constant HSS_BSR_OUT_NT                  : CELL_INFO;
+
+      -- HT I/O BSRs
+  constant HT16_BSR_IN_NT                   : CELL_INFO;
+  constant HT16_BSR_OUT_NT                  : CELL_INFO;
+  constant HT16R_BSR_BIDIR                  : CELL_INFO;
+  constant HT16T_BSR_BIDIR                  : CELL_INFO;
+
+
+end IBMDFT_1149_1_1998_V5;
+
+-----------------------------------------------------------------------
+
+package body IBMDFT_1149_1_1998_V5 is
+
+ use STD_1149_1_1994.all;
+
+ -- IBM DFTS Boundary Cells
+       -- Appendix A
+
+  -- System Input, Not Used as Component-Test Pin
+  constant BSR_IN_NT                 : CELL_INFO :=
+   ((INPUT,    EXTEST,  PI ),
+    (INPUT,    SAMPLE,  PI ),
+    (INPUT,    INTEST,  CAP),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+  constant BSR_IN0_NT                 : CELL_INFO :=
+   ((INPUT,    EXTEST,  PI ),
+    (INPUT,    SAMPLE,  PI ),
+    (INPUT,    INTEST,  ZERO),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+  constant BSR_IN1_NT                 : CELL_INFO :=
+   ((INPUT,    EXTEST,  PI ),
+    (INPUT,    SAMPLE,  PI ),
+    (INPUT,    INTEST,  ONE),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+  -- System Input, Used as DI2 or LSSD Scan Input or Output
+  constant BSR_IN_SIO                : CELL_INFO :=
+   ((INPUT,    EXTEST,  PI ),
+    (INPUT,    SAMPLE,  PI ),
+    (INPUT,    INTEST,  CAP),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+  -- System Input, Used as Test Control Input
+  constant BSR_IN_TI                 : CELL_INFO :=
+   ((INPUT,    EXTEST,  PI ),
+    (INPUT,    SAMPLE,  PI ),
+    (INPUT,    INTEST,  CAP),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+  -- System Clock Input
+  constant BSR_CLKIN                 : CELL_INFO :=
+   ((CLOCK,    EXTEST,  PI ),
+    (CLOCK,    SAMPLE,  PI ),
+    (CLOCK,    INTEST,  CAP),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+  constant BSR_CLKIN4                : CELL_INFO :=
+   ((CLOCK,    EXTEST,  PI ),
+    (CLOCK,    SAMPLE,  PI ),
+    (CLOCK,    INTEST,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+  -- System Output, Not Used as Component-Test Pin
+  constant BSR_OUT_NT                : CELL_INFO :=
+   ((OUTPUT2,  EXTEST,  PO ),
+    (OUTPUT2,  SAMPLE,  PI ),
+    (OUTPUT2,  INTEST,  PI ),
+    (OUTPUT3,  EXTEST,  PO ),
+    (OUTPUT3,  SAMPLE,  PI ),
+    (OUTPUT3,  INTEST,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+  -- System Output, Used as Component-Test Input
+  constant BSR_OUT_TI                : CELL_INFO :=
+   ((OUTPUT2,  EXTEST,  UPD),
+    (OUTPUT2,  SAMPLE,  PI ),
+    (OUTPUT2,  INTEST,  PI ),
+    (OUTPUT3,  EXTEST,  UPD),
+    (OUTPUT3,  SAMPLE,  PI ),
+    (OUTPUT3,  INTEST,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+  -- System Output, Used as Component-Test Output
+  constant BSR_OUT_TO                : CELL_INFO :=
+   ((OUTPUT2,  EXTEST,  UPD),
+    (OUTPUT2,  SAMPLE,  PI ),
+    (OUTPUT2,  INTEST,  PI ),
+    (OUTPUT3,  EXTEST,  UPD),
+    (OUTPUT3,  SAMPLE,  PI ),
+    (OUTPUT3,  INTEST,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+  constant BSR_OUT_TO_OO             : CELL_INFO :=
+   ((OUTPUT2,  EXTEST,  UPD),
+    (OUTPUT2,  SAMPLE,  PI ),
+    (OUTPUT2,  INTEST,  PI ),
+    (OUTPUT3,  EXTEST,  UPD),
+    (OUTPUT3,  SAMPLE,  PI ),
+    (OUTPUT3,  INTEST,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+  -- System Bidirectional, Not Used as Component-Test Output or Test Control Input
+  constant BSR_BIDIR                 : CELL_INFO :=
+   ((BIDIR_IN, EXTEST,  PI ),
+    (BIDIR_IN, SAMPLE,  PI ),
+    (BIDIR_IN, INTEST,  X  ),
+    (BIDIR_OUT,EXTEST,  PO ),
+    (BIDIR_OUT,SAMPLE,  PI ),
+    (BIDIR_OUT,INTEST,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+  -- System Bidirectional, Used as Test Control Input
+  constant BSR_BIDIR_TI              : CELL_INFO :=
+   ((BIDIR_IN, EXTEST,  PI ),
+    (BIDIR_IN, SAMPLE,  PI ),
+    (BIDIR_IN, INTEST,  X  ),
+    (BIDIR_OUT,EXTEST,  PO ),
+    (BIDIR_OUT,SAMPLE,  PI ),
+    (BIDIR_OUT,INTEST,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+  -- System Bidirectional, Used as Component-Test Output
+  constant BSR_BIDIR_TO              : CELL_INFO :=
+   ((BIDIR_IN, EXTEST,  PI ),
+    (BIDIR_IN, SAMPLE,  PI ),
+    (BIDIR_IN, INTEST,  X  ),
+    (BIDIR_OUT,EXTEST,  PO ),
+    (BIDIR_OUT,SAMPLE,  PI ),
+    (BIDIR_OUT,INTEST,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+  constant BSR_BIDIR_TO_OO           : CELL_INFO :=
+   ((BIDIR_IN, EXTEST,  PI ),
+    (BIDIR_IN, SAMPLE,  PI ),
+    (BIDIR_IN, INTEST,  X  ),
+    (BIDIR_OUT,EXTEST,  PO ),
+    (BIDIR_OUT,SAMPLE,  PI ),
+    (BIDIR_OUT,INTEST,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+  -- Enable Cell for 3-State I/Os, Not Used as Component-Test Pin
+  constant BSR_ENAB_NT               : CELL_INFO :=
+   ((CONTROL,  EXTEST,  UPD),
+    (CONTROL,  SAMPLE,  PI ),
+    (CONTROL,  INTEST,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+  constant BSR_ENABR_NT              : CELL_INFO :=
+   ((CONTROLR, EXTEST,  UPD),
+    (CONTROLR, SAMPLE,  PI ),
+    (CONTROLR, INTEST,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+      -- Observe-only Boundary Scan Cells
+
+  -- System Input, Observe-Only, Not Used as Component-Test Pin
+  -- INTEST not supported
+  constant BSR_IN_NT_OBS             : CELL_INFO :=
+   ((INPUT,    EXTEST,  PI),
+    (INPUT,    SAMPLE,  PI),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (OBSERVE_ONLY, EXTEST,  PI ),
+    (OBSERVE_ONLY, SAMPLE,  PI ) );
+
+
+  -- System Input, Observe-Only, Used as Component-Test Pin
+  -- INTEST not supported
+  constant BSR_IN_OBS                : CELL_INFO :=
+   ((INPUT,    EXTEST,  PI ),
+    (INPUT,    SAMPLE,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (OBSERVE_ONLY, EXTEST,  PI ),
+    (OBSERVE_ONLY, SAMPLE,  PI ) );
+
+
+  -- System Bidirectional, Observe-Only, Not Used as Component-Test Output
+  -- INTEST not supported
+  constant BSR_BIDIR_OBS             : CELL_INFO :=
+   ((BIDIR_IN, EXTEST,  PI ),
+    (BIDIR_IN, SAMPLE,  PI ),
+    (BIDIR_OUT,EXTEST,  PO ),
+    (BIDIR_OUT,SAMPLE,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (OBSERVE_ONLY, EXTEST,  PI ),
+    (OBSERVE_ONLY, SAMPLE,  PI ) );
+
+
+  -- System Bidirectional, Observe-Only, Used as Component-Test Output
+  -- INTEST not supported
+  constant BSR_BIDIR_TO_OBS          : CELL_INFO :=
+   ((BIDIR_IN, EXTEST,  PI ),
+    (BIDIR_IN, SAMPLE,  PI ),
+    (BIDIR_OUT,EXTEST,  PO ),
+    (BIDIR_OUT,SAMPLE,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (OBSERVE_ONLY, EXTEST,  PI ),
+    (OBSERVE_ONLY, SAMPLE,  PI ) );
+
+  constant BSR_BIDIR_TO_OO_OBS       : CELL_INFO :=
+   ((BIDIR_IN, EXTEST,  PI ),
+    (BIDIR_IN, SAMPLE,  PI ),
+    (BIDIR_OUT,EXTEST,  PO ),
+    (BIDIR_OUT,SAMPLE,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (OBSERVE_ONLY, EXTEST,  PI ),
+    (OBSERVE_ONLY, SAMPLE,  PI ) );
+
+
+  -- Dummy Boundary Scan Cell
+  constant BSR_DUMMY                         : CELL_INFO :=
+   ((INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+  -- System Input, Not Used as Component-Test Pin,  Balanced MUX
+  constant BAL_BSR_IN_NT                 : CELL_INFO :=
+   ((INPUT,    EXTEST,  PI ),
+    (INPUT,    SAMPLE,  PI ),
+    (INPUT,    INTEST,  CAP),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+  constant BAL_BSR_IN0_NT                 : CELL_INFO :=
+   ((INPUT,    EXTEST,  PI ),
+    (INPUT,    SAMPLE,  PI ),
+    (INPUT,    INTEST,  ZERO),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+  constant BAL_BSR_IN1_NT                 : CELL_INFO :=
+   ((INPUT,    EXTEST,  PI ),
+    (INPUT,    SAMPLE,  PI ),
+    (INPUT,    INTEST,  ONE),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+  -- System Input, Used as DI2 or LSSD Scan Input or Output, Balanced MUX
+  constant BAL_BSR_IN_SIO                : CELL_INFO :=
+   ((INPUT,    EXTEST,  PI ),
+    (INPUT,    SAMPLE,  PI ),
+    (INPUT,    INTEST,  CAP),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+  -- System Input, Used as Test Control Input, Balanced MUX
+  constant BAL_BSR_IN_TI                 : CELL_INFO :=
+   ((INPUT,    EXTEST,  PI ),
+    (INPUT,    SAMPLE,  PI ),
+    (INPUT,    INTEST,  CAP),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+  -- System Output, Not Used as Component-Test Pin, Balanced MUX
+  constant BAL_BSR_OUT_NT                : CELL_INFO :=
+   ((OUTPUT2,  EXTEST,  PO ),
+    (OUTPUT2,  SAMPLE,  PI ),
+    (OUTPUT2,  INTEST,  PI ),
+    (OUTPUT3,  EXTEST,  PO ),
+    (OUTPUT3,  SAMPLE,  PI ),
+    (OUTPUT3,  INTEST,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+  -- System Output, Used as Component-Test Input, Balanced MUX
+  constant BAL_BSR_OUT_TI                : CELL_INFO :=
+   ((OUTPUT2,  EXTEST,  UPD),
+    (OUTPUT2,  SAMPLE,  PI ),
+    (OUTPUT2,  INTEST,  PI ),
+    (OUTPUT3,  EXTEST,  UPD),
+    (OUTPUT3,  SAMPLE,  PI ),
+    (OUTPUT3,  INTEST,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+  -- System Output, Used as Component-Test Output, Balanced MUX
+  constant BAL_BSR_OUT_TO                : CELL_INFO :=
+   ((OUTPUT2,  EXTEST,  UPD),
+    (OUTPUT2,  SAMPLE,  PI ),
+    (OUTPUT2,  INTEST,  PI ),
+    (OUTPUT3,  EXTEST,  UPD),
+    (OUTPUT3,  SAMPLE,  PI ),
+    (OUTPUT3,  INTEST,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+  constant BAL_BSR_OUT_TO_OO             : CELL_INFO :=
+   ((OUTPUT2,  EXTEST,  UPD),
+    (OUTPUT2,  SAMPLE,  PI ),
+    (OUTPUT2,  INTEST,  PI ),
+    (OUTPUT3,  EXTEST,  UPD),
+    (OUTPUT3,  SAMPLE,  PI ),
+    (OUTPUT3,  INTEST,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+  -- Enable Cell for 3-State I/Os, Not Used as Component-Test Pin, Balanced MUX
+  constant BAL_BSR_ENAB_NT               : CELL_INFO :=
+   ((CONTROL,  EXTEST,  UPD),
+    (CONTROL,  SAMPLE,  PI ),
+    (CONTROL,  INTEST,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+  constant BAL_BSR_ENABR_NT              : CELL_INFO :=
+   ((CONTROLR, EXTEST,  UPD),
+    (CONTROLR, SAMPLE,  PI ),
+    (CONTROLR, INTEST,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+  -- System Bidirectional, Not Used as Component-Test Output or Test Control Input, Balanced MUX
+  constant BAL_BSR_BIDIR                 : CELL_INFO :=
+   ((BIDIR_IN, EXTEST,  PI ),
+    (BIDIR_IN, SAMPLE,  PI ),
+    (BIDIR_IN, INTEST,  X  ),
+    (BIDIR_OUT,EXTEST,  PO ),
+    (BIDIR_OUT,SAMPLE,  PI ),
+    (BIDIR_OUT,INTEST,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+  -- System Bidirectional, Used as Test Control Input, Balanced MUX
+  constant BAL_BSR_BIDIR_TI              : CELL_INFO :=
+   ((BIDIR_IN, EXTEST,  PI ),
+    (BIDIR_IN, SAMPLE,  PI ),
+    (BIDIR_IN, INTEST,  X  ),
+    (BIDIR_OUT,EXTEST,  PO ),
+    (BIDIR_OUT,SAMPLE,  PI ),
+    (BIDIR_OUT,INTEST,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+  -- System Bidirectional, Used as Component-Test Output, Balanced MUX
+  constant BAL_BSR_BIDIR_TO              : CELL_INFO :=
+   ((BIDIR_IN, EXTEST,  PI ),
+    (BIDIR_IN, SAMPLE,  PI ),
+    (BIDIR_IN, INTEST,  X  ),
+    (BIDIR_OUT,EXTEST,  PO ),
+    (BIDIR_OUT,SAMPLE,  PI ),
+    (BIDIR_OUT,INTEST,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+  constant BAL_BSR_BIDIR_TO_OO           : CELL_INFO :=
+   ((BIDIR_IN, EXTEST,  PI ),
+    (BIDIR_IN, SAMPLE,  PI ),
+    (BIDIR_IN, INTEST,  X  ),
+    (BIDIR_OUT,EXTEST,  PO ),
+    (BIDIR_OUT,SAMPLE,  PI ),
+    (BIDIR_OUT,INTEST,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+  -- System Bidirectional, Observe-Only, Not Used as Component-Test Output, Balanced MUX
+  -- INTEST not supported
+  constant BAL_BSR_BIDIR_OBS             : CELL_INFO :=
+   ((BIDIR_IN, EXTEST,  PI ),
+    (BIDIR_IN, SAMPLE,  PI ),
+    (BIDIR_OUT,EXTEST,  PO ),
+    (BIDIR_OUT,SAMPLE,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (OBSERVE_ONLY, EXTEST,  PI ),
+    (OBSERVE_ONLY, SAMPLE,  PI ) );
+
+
+  -- System Bidirectional, Observe-Only, Used as Component-Test Output, Balanced MUX
+  -- INTEST not supported
+  constant BAL_BSR_BIDIR_TO_OBS          : CELL_INFO :=
+   ((BIDIR_IN, EXTEST,  PI ),
+    (BIDIR_IN, SAMPLE,  PI ),
+    (BIDIR_OUT,EXTEST,  PO ),
+    (BIDIR_OUT,SAMPLE,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (OBSERVE_ONLY, EXTEST,  PI ),
+    (OBSERVE_ONLY, SAMPLE,  PI ) );
+
+  constant BAL_BSR_BIDIR_TO_OO_OBS       : CELL_INFO :=
+   ((BIDIR_IN, EXTEST,  PI ),
+    (BIDIR_IN, SAMPLE,  PI ),
+    (BIDIR_OUT,EXTEST,  PO ),
+    (BIDIR_OUT,SAMPLE,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (OBSERVE_ONLY, EXTEST,  PI ),
+    (OBSERVE_ONLY, SAMPLE,  PI ) );
+
+
+
+  -- System Input, Not Used as Component-Test Pin, Inline BSR
+  constant INLINE_BSR_IN_NT                 : CELL_INFO :=
+   ((INPUT,    EXTEST,  PI ),
+    (INPUT,    SAMPLE,  PI ),
+    (INPUT,    INTEST,  CAP),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+  constant INLINE_BSR_IN0_NT                 : CELL_INFO :=
+   ((INPUT,    EXTEST,  PI ),
+    (INPUT,    SAMPLE,  PI ),
+    (INPUT,    INTEST,  ZERO),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+  constant INLINE_BSR_IN1_NT                 : CELL_INFO :=
+   ((INPUT,    EXTEST,  PI ),
+    (INPUT,    SAMPLE,  PI ),
+    (INPUT,    INTEST,  ONE),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+  -- System Input, Used as DI2 or LSSD Scan Input or Output, Inline BSR
+  constant INLINE_BSR_IN_SIO                : CELL_INFO :=
+   ((INPUT,    EXTEST,  PI ),
+    (INPUT,    SAMPLE,  PI ),
+    (INPUT,    INTEST,  CAP),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+  -- System Input, Used as Test Control Input, Inline BSR
+  constant INLINE_BSR_IN_TI                 : CELL_INFO :=
+   ((INPUT,    EXTEST,  PI ),
+    (INPUT,    SAMPLE,  PI ),
+    (INPUT,    INTEST,  CAP),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+  -- System Output, Not Used as Component-Test Pin, Inline BSR
+  constant INLINE_BSR_OUT_NT                : CELL_INFO :=
+   ((OUTPUT2,  EXTEST,  PO ),
+    (OUTPUT2,  SAMPLE,  PI ),
+    (OUTPUT2,  INTEST,  PI ),
+    (OUTPUT3,  EXTEST,  PO ),
+    (OUTPUT3,  SAMPLE,  PI ),
+    (OUTPUT3,  INTEST,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+
+  -- System Output, Used as Component-Test Input, Inline BSR
+  constant INLINE_BSR_OUT_TI                : CELL_INFO :=
+   ((OUTPUT2,  EXTEST,  UPD),
+    (OUTPUT2,  SAMPLE,  PI ),
+    (OUTPUT2,  INTEST,  PI ),
+    (OUTPUT3,  EXTEST,  UPD),
+    (OUTPUT3,  SAMPLE,  PI ),
+    (OUTPUT3,  INTEST,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+
+  -- System Bidirectional, Not Used as Component-Test Output or Test Control Input, Inline BSR
+  constant INLINE_BSR_BIDIR                 : CELL_INFO :=
+   ((BIDIR_IN, EXTEST,  PI ),
+    (BIDIR_IN, SAMPLE,  PI ),
+    (BIDIR_IN, INTEST,  X  ),
+    (BIDIR_OUT,EXTEST,  PO ),
+    (BIDIR_OUT,SAMPLE,  PI ),
+    (BIDIR_OUT,INTEST,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+  -- System Bidirectional, Used as Test Control Input, Inline BSR
+  constant INLINE_BSR_BIDIR_TI              : CELL_INFO :=
+   ((BIDIR_IN, EXTEST,  PI ),
+    (BIDIR_IN, SAMPLE,  PI ),
+    (BIDIR_IN, INTEST,  X  ),
+    (BIDIR_OUT,EXTEST,  PO ),
+    (BIDIR_OUT,SAMPLE,  PI ),
+    (BIDIR_OUT,INTEST,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+  -- System Bidirectional, Used as Component-Test Output, Inline BSR
+  constant INLINE_BSR_BIDIR_TO              : CELL_INFO :=
+   ((BIDIR_IN, EXTEST,  PI ),
+    (BIDIR_IN, SAMPLE,  PI ),
+    (BIDIR_IN, INTEST,  X  ),
+    (BIDIR_OUT,EXTEST,  PO ),
+    (BIDIR_OUT,SAMPLE,  PI ),
+    (BIDIR_OUT,INTEST,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+  constant INLINE_BSR_BIDIR_TO_OO           : CELL_INFO :=
+   ((BIDIR_IN, EXTEST,  PI ),
+    (BIDIR_IN, SAMPLE,  PI ),
+    (BIDIR_IN, INTEST,  X  ),
+    (BIDIR_OUT,EXTEST,  PO ),
+    (BIDIR_OUT,SAMPLE,  PI ),
+    (BIDIR_OUT,INTEST,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+
+  -- Enable Cell for 3-State I/Os, Not Used as Component-Test Pin, Inline BSR
+  constant INLINE_BSR_ENAB_NT               : CELL_INFO :=
+   ((CONTROL,  EXTEST,  UPD),
+    (CONTROL,  SAMPLE,  PI ),
+    (CONTROL,  INTEST,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+  constant INLINE_BSR_ENABR_NT              : CELL_INFO :=
+   ((CONTROLR, EXTEST,  UPD),
+    (CONTROLR, SAMPLE,  PI ),
+    (CONTROLR, INTEST,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+      -- Observe-only Boundary Scan Cells
+
+  -- System Bidirectional, Observe-Only, Not Used as Component-Test Output, Inline BSR
+  -- INTEST not supported
+  constant INLINE_BSR_BIDIR_OBS             : CELL_INFO :=
+   ((BIDIR_IN, EXTEST,  PI ),
+    (BIDIR_IN, SAMPLE,  PI ),
+    (BIDIR_OUT,EXTEST,  PO ),
+    (BIDIR_OUT,SAMPLE,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (OBSERVE_ONLY, EXTEST,  PI ),
+    (OBSERVE_ONLY, SAMPLE,  PI ) );
+
+
+
+    --
+    -- High-Speed I/O Boundary Scan Cells
+    --
+
+  -- System Input, Not Used as Component-Test Pin, High-speed I/O BSR
+  constant HSIO_BSR_IN_NT                 : CELL_INFO :=
+   ((INPUT,    EXTEST,  PI ),
+    (INPUT,    SAMPLE,  PI ),
+    (INPUT,    INTEST,  CAP),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+  -- System Input, Used as DI2 or LSSD Scan Input or Output, High-speed I/O BSR
+  constant HSIO_BSR_IN_SIO                : CELL_INFO :=
+   ((INPUT,    EXTEST,  PI ),
+    (INPUT,    SAMPLE,  PI ),
+    (INPUT,    INTEST,  CAP),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+  -- System Input, Used as Test Control Input, High-speed I/O BSR
+  constant HSIO_BSR_CLKIN                 : CELL_INFO :=
+   ((CLOCK,    EXTEST,  PI ),
+    (CLOCK,    SAMPLE,  PI ),
+    (CLOCK,    INTEST,  CAP),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+  -- System Output, Not Used as Component-Test Pin, High-speed I/O BSR
+  constant HSIO_BSR_OUT_NT                : CELL_INFO :=
+   ((OUTPUT2,  EXTEST,  PO ),
+    (OUTPUT2,  SAMPLE,  PI ),
+    (OUTPUT2,  INTEST,  PI ),
+    (OUTPUT3,  EXTEST,  PO ),
+    (OUTPUT3,  SAMPLE,  PI ),
+    (OUTPUT3,  INTEST,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+
+  -- System Output, Used as Component-Test Input, High-speed I/O BSR
+  constant HSIO_BSR_OUT_TI                : CELL_INFO :=
+   ((OUTPUT2,  EXTEST,  UPD),
+    (OUTPUT2,  SAMPLE,  PI ),
+    (OUTPUT2,  INTEST,  PI ),
+    (OUTPUT3,  EXTEST,  UPD),
+    (OUTPUT3,  SAMPLE,  PI ),
+    (OUTPUT3,  INTEST,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+  -- System Output, Used as Component-Test Output, High-speed I/O BSR
+  constant HSIO_BSR_OUT_TO                : CELL_INFO :=
+   ((OUTPUT2,  EXTEST,  UPD),
+    (OUTPUT2,  SAMPLE,  PI ),
+    (OUTPUT2,  INTEST,  PI ),
+    (OUTPUT3,  EXTEST,  UPD),
+    (OUTPUT3,  SAMPLE,  PI ),
+    (OUTPUT3,  INTEST,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+  constant HSIO_BSR_OUT_TO_OO             : CELL_INFO :=
+   ((OUTPUT2,  EXTEST,  UPD),
+    (OUTPUT2,  SAMPLE,  PI ),
+    (OUTPUT2,  INTEST,  PI ),
+    (OUTPUT3,  EXTEST,  UPD),
+    (OUTPUT3,  SAMPLE,  PI ),
+    (OUTPUT3,  INTEST,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+  -- System Bidirectional, Not Used as Component-Test Output or Test Control Input, High-speed I/O BSR
+  constant HSIO_BSR_BIDIR                 : CELL_INFO :=
+   ((BIDIR_IN, EXTEST,  PI ),
+    (BIDIR_IN, SAMPLE,  PI ),
+    (BIDIR_IN, INTEST,  X  ),
+    (BIDIR_OUT,EXTEST,  PO ),
+    (BIDIR_OUT,SAMPLE,  PI ),
+    (BIDIR_OUT,INTEST,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+  -- System Bidirectional, Used as Component-Test Output, High-speed I/O BSR
+  constant HSIO_BSR_BIDIR_TO              : CELL_INFO :=
+   ((BIDIR_IN, EXTEST,  PI ),
+    (BIDIR_IN, SAMPLE,  PI ),
+    (BIDIR_IN, INTEST,  X  ),
+    (BIDIR_OUT,EXTEST,  PO ),
+    (BIDIR_OUT,SAMPLE,  PI ),
+    (BIDIR_OUT,INTEST,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+  constant HSIO_BSR_BIDIR_TO_OO           : CELL_INFO :=
+   ((BIDIR_IN, EXTEST,  PI ),
+    (BIDIR_IN, SAMPLE,  PI ),
+    (BIDIR_IN, INTEST,  X  ),
+    (BIDIR_OUT,EXTEST,  PO ),
+    (BIDIR_OUT,SAMPLE,  PI ),
+    (BIDIR_OUT,INTEST,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+      -- LC Tank PLL I/O BSRs
+  constant LCPLL_BSR_IN_SIO                : CELL_INFO :=
+   ((INPUT,    EXTEST,  PI ),
+    (INPUT,    SAMPLE,  PI ),
+    (INPUT,    INTEST,  CAP),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+  constant LCPLL_BSR_CLKIN                 : CELL_INFO :=
+   ((CLOCK,    EXTEST,  PI ),
+    (CLOCK,    SAMPLE,  PI ),
+    (CLOCK,    INTEST,  CAP),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+      -- HSS I/O BSRs
+  -- System Input, Not Used as Component-Test Pin
+  -- This cell does not support INTEST
+  constant HSS_BSR_IN_NT                 : CELL_INFO :=
+   ((INPUT,    EXTEST,  PI ),
+    (INPUT,    SAMPLE,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ) );
+
+  -- System Output, Not Used as Component-Test Pin
+  constant HSS_BSR_OUT_NT                : CELL_INFO :=
+   ((OUTPUT2,  EXTEST,  UPD ),
+    (OUTPUT2,  SAMPLE,  PI ),
+    (OUTPUT2,  INTEST,  PI ),
+    (OUTPUT3,  EXTEST,  UPD ),
+    (OUTPUT3,  SAMPLE,  PI ),
+    (OUTPUT3,  INTEST,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+      -- HT I/O BSRs
+  -- System Input, Not Used as Component-Test Pin
+  constant HT16_BSR_IN_NT                 : CELL_INFO :=
+   ((INPUT,    EXTEST,  PI ),
+    (INPUT,    SAMPLE,  PI ),
+    (INPUT,    INTEST,  CAP),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+  -- System Output, Not Used as Component-Test Pin
+  constant HT16_BSR_OUT_NT                : CELL_INFO :=
+   ((OUTPUT2,  EXTEST,  PO ),
+    (OUTPUT2,  SAMPLE,  PI ),
+    (OUTPUT2,  INTEST,  PI ),
+    (OUTPUT3,  EXTEST,  PO ),
+    (OUTPUT3,  SAMPLE,  PI ),
+    (OUTPUT3,  INTEST,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+  -- System Bidirectional, Receiver, Not Used as Component-Test Output or Test Control Input
+  constant HT16R_BSR_BIDIR                 : CELL_INFO :=
+   ((BIDIR_IN, EXTEST,  PI ),
+    (BIDIR_IN, SAMPLE,  PI ),
+    (BIDIR_IN, INTEST,  X  ),
+    (BIDIR_OUT,EXTEST,  PO ),
+    (BIDIR_OUT,SAMPLE,  PI ),
+    (BIDIR_OUT,INTEST,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+  -- System Bidirectional, Driver, Not Used as Component-Test Output or Test Control Input
+  constant HT16T_BSR_BIDIR                 : CELL_INFO :=
+   ((BIDIR_IN, EXTEST,  PI ),
+    (BIDIR_IN, SAMPLE,  PI ),
+    (BIDIR_IN, INTEST,  X  ),
+    (BIDIR_OUT,EXTEST,  PO ),
+    (BIDIR_OUT,SAMPLE,  PI ),
+    (BIDIR_OUT,INTEST,  PI ),
+    (INTERNAL, EXTEST,  X  ),
+    (INTERNAL, SAMPLE,  X  ),
+    (INTERNAL, INTEST,  X  ) );
+
+
+end IBMDFT_1149_1_1998_V5;
+

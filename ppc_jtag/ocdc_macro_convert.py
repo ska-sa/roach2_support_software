@@ -4,7 +4,7 @@ import sys
 
 '''  urJTAG defines '''
 
-URJTAG_PROGRAMMER = "jtagkey vid=0403 pid=6011"
+URJTAG_PROGRAMMER = "roach-2"
 URJTAG_PROGRAMMER_PARAMETERS = ""
 BSDL_PATH = "/home/dave/work/svnROACH2/testing/bsdl"
 
@@ -23,13 +23,11 @@ JTAGI_PPCDBGR = "10110100"
 
 ''' PPC JTAG magic strings '''
 
-# Hmmm, could this possible be SPR 'dbcr0?'
-PPCMODE_INIT0 = "110111000000000000000000000000000"
-PPCMODE_INIT1 = "110000000000000000000000000000000"
-PPCMODE_INIT2 = "110000000000000000000000000000000"
-PPCMODE_INIT3 = "010000000000000000000000000000000"
-
+# mess with dbcr0
+PPCMODE_DEBUG_RESET = "110111000000000000000000000000000"
 PPCMODE_DEBUG_EXTERNAL = "110000000000000000000000000000000"
+PPCMODE_DEBUG_READ = "010000000000000000000000000000000"
+
 
 # Hmmm, that would make sense except for below'
 PPCMODE_SYNC = "000000000000000000000000001010100"
@@ -278,8 +276,8 @@ def init_jtag():
   print "instruction PPCDBGR %s R_PPCDBGR"%(JTAGI_PPCDBGR)
 
 def run_halt(command, args):
-  # first clear the halt flag, wait a bit then set it
-  print "pod RESET=0"
+  # first halt the processor
+  print "pod HALT=1"
 
   # select the PPCMODE instruction
   print "instruction PPCMODE"
@@ -289,33 +287,33 @@ def run_halt(command, args):
   print "shift dr"
 
   # clear the halt flag
-  print "pod reset=1"
+  print "pod HALT=0"
 
   print "shift ir"
   print "dr %s"%(PPCMODE_DEBUG_EXTERNAL)
   print "shift dr"
 
 def run_reset(command, args):
-  # first clear the halt flag, wait a bit then set it
-  print "pod RESET=0"
+  # halt the processor
+  print "pod HALT=1"
 
   # select the PPCMODE instruction
   print "instruction PPCMODE"
   # load instruction
   print "shift ir"
-  print "dr %s"%(PPCMODE_INIT0)
+  print "dr %s"%(PPCMODE_DEBUG_RESET)
   print "shift dr"
   print "shift ir"
-  print "dr %s"%(PPCMODE_INIT1)
+  print "dr %s"%(PPCMODE_DEBUG_EXTERNAL)
   print "shift dr"
 
-  # clear the halt flag
-  print "pod reset=1"
+  # unhalt the processor
+  print "pod HALT=0"
 
   print "shift ir"
-  print "dr %s"%(PPCMODE_INIT2)
+  print "dr %s"%(PPCMODE_DEBUG_EXTERNAL)
   print "shift dr"
-  print "dr %s"%(PPCMODE_INIT3)
+  print "dr %s"%(PPCMODE_DEBUG_READ)
   print "shift dr"
   print "shift ir"
   print "dr %s"%(PPCMODE_SYNC)

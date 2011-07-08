@@ -1,0 +1,114 @@
+-- File Name		:MAX16071.BSD
+-- Created by		:Maxim Integrated Products
+-- Documentation	:MAX16070/MAX16071 data sheet
+--
+-- 
+--
+-- BSDL Revision	:1.0  
+--
+-- Date created	        :9/29/2009
+-- Date modified        :12/1/2009
+-- Device	        :MAX16071
+-- Package	        :40-pin TQFN
+-- 
+-- 
+--			IMPORTANT NOTICE
+-- Maxim customers are advised to obtain the latest version of device 
+-- specifications before relying on any published information contained 
+-- herein. Maxim Integrated Products assumes no responsibility or liability 
+-- arising out of the application of any information described herein.
+--
+--
+--
+--			IMPORTANT NOTICE ABOUT THE REVISION
+--
+-- Maxim customers are advised to check the revision of the  
+-- device they will be using.  All the codes for the device revisions are 
+-- here in this BSDL file.
+--
+-- The characters "/", "(", ")" and "*" have been removed from signal names for 
+-- compatibility with BSDL file format.
+-- 
+-- 
+entity MAX16071 is
+generic (PHYSICAL_PIN_MAP : string := "TQFN_40");
+
+port (
+MONx                                       :linkage bit_vector(1 to 8);
+CSP, CSM                                   :linkage bit;
+RESET                                      :linkage bit;
+TMS, TDI, TCK                              :in bit;
+TDO                                        :out bit;
+SDA, A0, SCL                               :linkage bit;
+GND                                        :linkage bit_vector(1 to 2);
+GPIOx                                      :linkage bit_vector(1 to 6);
+NC                                         :linkage bit_vector(1 to 9);
+EN                                         :linkage bit;
+DBP                                        :linkage bit_vector(1 to 2);
+VCC, ABP                                   :linkage bit
+);
+
+use STD_1149_1_2001.all;
+attribute COMPONENT_CONFORMANCE of MAX16071 : entity is "STD_1149_1_2001";
+
+attribute PIN_MAP of MAX16071 : entity is PHYSICAL_PIN_MAP;
+constant TQFN_40 : PIN_MAP_STRING :=
+"MONx:(40, 1, 2, 3, 4, 5, 36, 37),"&
+"CSP:6, CSM:7, RESET:8, TMS:9, TDI:10, TCK:11, TDO:12, SDA:13, A0:14, SCL:15,"&
+"GND:(16, 35),"&
+"GPIOx:(17, 18, 19, 20, 21, 22),"&
+"NC:(23, 24, 25, 26, 27, 28, 30, 38, 39),"&
+"EN:29, DBP:(31, 32), VCC:33, ABP:34";
+
+attribute TAP_SCAN_CLOCK of TCK		:signal is (1.00e6,BOTH);
+attribute TAP_SCAN_IN of TDI			:signal is true;
+attribute TAP_SCAN_MODE of TMS		:signal is true;
+attribute TAP_SCAN_OUT of TDO			:signal is true;
+
+attribute INSTRUCTION_LENGTH of MAX16071	:entity is 5;
+attribute INSTRUCTION_OPCODE of MAX16071	:entity is
+"BYPASS     (11111),"&
+"IDCODE     (00000),"&
+"SAMPLE     (00001),"&  -- WARNING: UNIMPLEMENTED, DO NOT USE
+"PRELOAD    (00001),"&  -- WARNING: UNIMPLEMENTED, DO NOT USE
+"EXTEST     (00010),"&  -- WARNING: UNIMPLEMENTED, DO NOT USE
+"USERCODE   (00011),"&
+"LOADADDR   (00100),"&
+"READ       (00101),"&
+"WRITE      (00110),"&
+"REBOOT     (00111),"&
+"SAVE       (01000),"&
+"SETFLSHADD (01001),"&
+"RSTFLSHADD (01010),"&
+"SETUSRFLSH (01011),"&
+"RSTUSRFLSH (01100)";
+                                                
+attribute INSTRUCTION_CAPTURE of MAX16071 :entity is "X0001";
+                                                   -- ^ Bit 4=BUSY (1 if device is busy)
+-- attribute INSTRUCTION_PRIVATE of MAX16071 :entity is "SAVE";
+-- REBOOT and SAVE are available for customer use, but they are classified as private because they
+-- do not access a particular test data register.
+
+attribute IDCODE_REGISTER of MAX16071 :entity is
+"XXXX"&                   -- Version for any revision
+--"0001"&                 -- Version for rev 1
+"10000000000001XX"&       -- Device ID
+"00011001011"&            -- Manufacturer ID
+"1"; 				  -- Mandatory bit
+
+
+attribute USERCODE_REGISTER of MAX16071 :entity is
+"00000000000000000"&      -- Unused
+"XXXXXXX"&                -- I2C Slave address
+"XXXXXXXX";               -- Register r8Ah[7:0] contents
+
+attribute REGISTER_ACCESS of MAX16071 :entity is
+"MEMADDR[8] (LOADADDR), "&
+"MEMREAD[8] (READ), "&
+"MEMWRITE[8] (WRITE)";    -- Data shifted out is status byte: Bit 0= 1 if EEPROM is busy), Bit 1= 1 if address invalid.
+
+-- The MAX16071 does not implement boundary scan registers.
+attribute BOUNDARY_LENGTH of MAX16071 :entity is 1;
+attribute BOUNDARY_REGISTER of MAX16071 :entity is "0 (BC_1, *, internal,X)";
+
+end MAX16071;

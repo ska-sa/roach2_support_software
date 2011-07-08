@@ -854,22 +854,25 @@ attribute INSTRUCTION_OPCODE of ct_wrap_440EPx_B: entity is
 "EXTEST (00000000)," &
 "SAMPLE (00000010)," &
 "IDCODE (00000011)," &
-"PPC0 (01010100)," &
-"PPC1 (01110100)," &
+"PPCMODE (01010100)," &
+"PPCINST (01110100)," &
 "PPC2 (10010100)," &
 "PPC3 (10100100)," &
-"PPC4 (10110100)," &
+"PPCDBGR (10110100)," &
 "HIGHZ (00000101)," &
 "CLAMP (00000110)," &
 "BYPASS (11111111)";
 
 attribute INSTRUCTION_CAPTURE of ct_wrap_440EPx_B: entity is "XXXX0001";
-attribute INSTRUCTION_PRIVATE of ct_wrap_440EPx_B: entity is "PPC, OTHER";
+--attribute INSTRUCTION_PRIVATE of ct_wrap_440EPx_B: entity is "PPC, OTHER";
 attribute IDCODE_REGISTER of ct_wrap_440EPx_B: entity is
  "00000100010000001111000111100001";
 attribute REGISTER_ACCESS of ct_wrap_440EPx_B: entity is
 "DEVICE_ID (IDCODE)," &
-"PPC_TDR[33] (PPC)";
+"R_PPCINST[33] (PPCINST)," &
+"R_PPCDBGR[33] (PPCDBGR)," &
+"R_PPCMODE[33] (PPCMODE)";
+
 attribute BOUNDARY_LENGTH of ct_wrap_440EPx_B: entity is 662;
 attribute BOUNDARY_REGISTER of ct_wrap_440EPx_B: entity is
  "0 (BSR_ENAB_NT, *, CONTROL, 0)," &

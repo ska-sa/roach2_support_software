@@ -1,0 +1,4 @@
+The python wrappers for the FTDI eeprom dont work in the existing version of the code.
+The tar file contains a version hacked up to get the methods we need working.
+
+To install these libraries: unzip run as root: python /bindings/python/setup.py install 

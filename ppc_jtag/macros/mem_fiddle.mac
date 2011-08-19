@@ -1,0 +1,5 @@
+halt
+word 0x00000000 = 0xdefaced
+word 0x00000000
+go
+

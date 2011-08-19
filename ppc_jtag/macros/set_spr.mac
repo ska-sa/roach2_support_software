@@ -1,0 +1,3 @@
+halt
+spr 0x23c = 0xffffffff
+go

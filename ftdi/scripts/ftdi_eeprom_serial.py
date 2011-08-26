@@ -33,7 +33,7 @@ def write_serial(serial):
 def read_serial():
    serial = "" 
    F.eeprom_size = 256
-   result, eeprom_data = ftdi.ftdi_read_eeprom(F)
+   result, eeprom_data = ftdi.ftdi_read_eeprom(F, "256")
    if result == 0:
       eeprom_length = (int(hex(struct.unpack('H' * 128, eeprom_data)[103]),16)-770)/2  
       for i in range(eeprom_length):

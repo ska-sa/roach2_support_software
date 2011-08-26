@@ -1,0 +1,45 @@
+cable roach-2 vid=0403 pid=6011 
+bsdl path /data/svnROACH2/testing/bsdl/
+detect
+register R_PPCMODE 33
+register R_PPCINST 33
+register R_PPCDBGR 33
+instruction length 8
+instruction PPCMODE 01010100 R_PPCMODE
+instruction PPCINST 01110100 R_PPCINST
+instruction PPCDBGR 10110100 R_PPCDBGR
+#unknown operation: halt 
+#spr 0x23c
+instruction PPCINST
+shift ir
+dr 101111100001111001000101010100110
+shift dr
+instruction PPCINST
+shift ir
+dr 101111100001100111111101110100110
+shift dr
+instruction PPCDBGR
+shift ir
+dr 000000000000000000000000010110100
+shift dr
+reading register 1
+dr
+# go 
+instruction PPCMODE
+shift ir
+dr 000000000000000000000000001010100
+shift dr
+shift ir
+dr 000000000000000000000000001010100
+shift dr
+shift ir
+dr 100000000000000000000000000000000
+shift dr
+dr 000000000000000000000000000000000
+shift dr
+shift ir
+dr 000000000000000000000000001010100
+shift dr
+shift ir
+dr 000000000000000000000000001010100
+shift dr

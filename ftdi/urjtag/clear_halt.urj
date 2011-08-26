@@ -1,0 +1,4 @@
+cable ROACH-2 vid=0403 pid=6011 
+bsdl path /data/svnROACH2/testing/bsdl
+detect
+pod HALT=0

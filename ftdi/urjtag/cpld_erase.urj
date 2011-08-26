@@ -1,0 +1,24 @@
+cable ROACH-2
+bsdl path /data/svnROACH2/testing/bsdl
+detect
+register FOO 1
+part 0
+reset
+instruction ISC_ENABLE
+shift ir
+usleep 1000
+instruction ISC_ERASE
+shift ir
+instruction ISC_INIT
+shift ir
+instruction ISC_INIT
+shift ir
+shift dr
+instruction ISC_DISABLE
+shift ir
+instruction BYPASS
+shift ir
+
+
+
+

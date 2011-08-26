@@ -1,0 +1,7 @@
+cable roach-2
+bsdl path /data/svnROACH2/testing/bsdl
+detect
+instruction PPCMODE
+shift ir
+dr 110000000000000000000000000000000
+shift dr

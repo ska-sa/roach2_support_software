@@ -1,0 +1,5 @@
+cable roach-2
+bsdl path /data/svnROACH2/testing/bsdl/
+detect
+part 8
+svf /home/dave/roach2_cpld.svf

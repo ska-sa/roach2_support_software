@@ -1,0 +1,48 @@
+cable roach-2
+bsdl path /data/svnROACH2/testing/bsdl/
+detect
+part 0
+instruction LOADADDR
+shift ir
+dr 0x8b
+shift dr
+instruction READ
+shift ir
+shift dr
+dr
+
+instruction LOADADDR
+shift ir
+dr 0x8c
+shift dr
+instruction WRITE
+shift ir
+dr 0x00
+shift dr
+
+instruction LOADADDR
+shift ir
+dr 0x8a
+shift dr
+instruction WRITE
+shift ir
+dr 0x00
+shift dr
+
+instruction LOADADDR
+shift ir
+dr 0x8b
+shift dr
+instruction WRITE
+shift ir
+dr 0x00
+shift dr
+
+instruction LOADADDR
+shift ir
+dr 0x8b
+shift dr
+instruction READ
+shift ir
+shift dr
+dr

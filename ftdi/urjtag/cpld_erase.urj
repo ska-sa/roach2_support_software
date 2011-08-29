@@ -2,7 +2,7 @@ cable ROACH-2
 bsdl path /data/svnROACH2/testing/bsdl
 detect
 register FOO 1
-part 0
+part 8
 reset
 instruction ISC_ENABLE
 shift ir

@@ -1,13 +1,13 @@
-import ftdi
-import time
-import struct
-
+import ftdi, time, struct, logging
 
 F = ftdi.ftdi_context()
 E = ftdi.ftdi_eeprom()
 
+logger = logging.getLogger("app")
+
 # Sets up the connection to the FTDI chip
-def init_ftdi():
+def init_ftdi(log):
+   logger = log
    ftdi.ftdi_init(F)
    result = ftdi.ftdi_usb_open(F, 0x0403, 0x6011)
    if result <> 0:

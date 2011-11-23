@@ -1,0 +1,252 @@
+--*******************************************************************************************************
+--**  Copyright (c) 2009 Cypress Semiconductor
+--**  All rights reserved.
+--**							
+--**  File Name: 1515KV18_x36_165.bsdl	
+--**  Release: 2.0
+--**  Last Updated: August 27, 2009
+--**
+--**  Part #:		CY7C1515KV18
+--**  Package:		165 Ball FBGA
+--**  Function:		2M x 36 QDR2 4-Word Burst SRAM, BSDL file for JTAG
+--** Written by : Cypress MID Applications
+--** Queries ? :contact Cypress MID Applications
+--** Note : This part is fully compliant with IEEE standard 1149.1
+--**	Ref CY7C1515KV18 Datasheet at http://www.cypress.com
+--**
+--*******************************************************************************************************
+entity CY7C1515KV18 is
+    generic (PHYSICAL_PIN_MAP : string := "FBGA");
+
+    port  (
+        A:         in    bit_vector(0 to 18);
+        BWS0_n:    in        bit;
+         BWS1_n:   in        bit;
+        BWS2_n:    in        bit;
+        BWS3_n:    in        bit;
+        C:         in        bit;   
+        C_n:       in        bit;
+        CQ:        buffer    bit;
+        CQ_n:      buffer    bit;
+        DOFF_N:      in    bit;   
+        K:         in    bit;
+        K_n:       in    bit;
+        RPS_n:      in        bit;
+        WPS_n:     in        bit;
+        D:         in    bit_vector(0 to 35);
+        Q:         inout    bit_vector(0 to 35);
+        TMS:       in        bit;
+        TDI:       in        bit;
+        TCK:       in        bit;
+        TDO:       out       bit;   
+        ZQ:        in    bit;
+        VREF:      linkage bit_vector(0 to 1);
+        VDD:       linkage bit_vector(0 to 9);
+        VSS:       linkage bit_vector(0 to 24);
+        VDDQ:      linkage bit_vector(0 to 15);
+        NC:        linkage bit_vector(0 to 2)
+        );
+
+    use STD_1149_1_2001.all;
+
+    attribute COMPONENT_CONFORMANCE of CY7C1515KV18 : entity is "STD_1149_1_1993";
+
+    attribute PIN_MAP of CY7C1515KV18 : entity is PHYSICAL_PIN_MAP;
+
+        constant  FBGA:PIN_MAP_STRING:=
+            "A:(N6,P7,N7,R7,R8,P8,R9,A9,B8,C7,     " &
+            "C5,B4,A3,R3,R4,P4,P5,N5,R5), " & --Address
+
+            "BWS0_n:B7, " &--Byte Write
+            "BWS1_n:A7, " &--Byte Write
+            "BWS2_n:A5, " &--Byte Write
+            "BWS3_n:B5, " &--Byte Write    
+            "C:P6, " &--bidir Positive Clock
+            "C_n:R6, " &--bidir Negative Clock
+            "CQ:A11, " &--Echo Positive Clock
+            "CQ_n:A1, " &--Echo Negative Clock
+            "DOFF_N:H1, " & --DLL-off pin
+            "K:B6, " &--Input Positive Clock
+            "K_n:A6, " &--Input Negative Clock
+            "RPS_n:A8, " & --Read Port Select
+            "WPS_n:A4, " &--Write Port Select
+
+            "D:(P10,N11,M11,K10,J11,G11,E10,D11,C11, " &
+            "N10,M9,L9,J9,G10,F9,D10,C9,B9,B3,C3," &
+            "D2,F3,G2,J3,L3,M3,N2,C1,D1,E2,G1,J1," &
+            "K2,M1,N1,P2), " &
+
+            "Q:(P11,M10,L11,K11,J10,F11,E11,C10,B11, " &
+            "P9,N9,L10,K9,G9,F14,E9,D9,B10,B2,D3," &
+            "E3,F2,G3,K3,L2,N3,P3,B1,C2,E1,F1,J2," &
+            "K1,L1,M2,P1), " &
+
+            "TMS:R10, " &--JTAG Test Mode Select
+            "TDI:R11, " &--JTAG Test Data In
+            "TCK:R2, " & --JTAG Test Clock
+            "TDO:R1, " &--JTAG Test Data Out
+            "ZQ:H11, " & --Programmable Impedance Pin
+
+            "VREF:(H2, H10), " & --Input Voltage Reference
+            "VDD:(F5,F7,G5,G7,H5,H7,J5,J7,K5,K7), " &
+  
+
+            "VSS:(C4,C8,D4,D5,D6,D7,D8,E5, " &
+            "E6,E7,F6,G6,H6,J6,K6,L5,L6,L7, " &
+            "M4,M5,M6,M7,M8,N4,N8), " &
+       
+            "NC:(A2,A10,C6), " &
+
+
+            "VDDQ:(E4,E8,F4,F8,G4,G8,H3,H4,H8,H9, " &
+            "J4,J8,K4,K8,L4,L8)";
+
+            
+
+    attribute TAP_SCAN_IN    of TDI : signal is true;
+    attribute TAP_SCAN_OUT   of TDO : signal is true;
+    attribute TAP_SCAN_MODE  of TMS : signal is true;
+    attribute TAP_SCAN_CLOCK of TCK : signal is (10.0e6, BOTH);
+
+    attribute INSTRUCTION_LENGTH of CY7C1515KV18 : entity is 3;
+
+    attribute INSTRUCTION_OPCODE of CY7C1515KV18 : entity is
+        "EXTEST    (000)," &
+         "IDCODE    (001)," &
+         "SAMPLEZ    (010)," &-- Sample-Z
+        "RESERV1    (011)," &
+         "SAMPLE    (100)," &-- Sample
+         "PRELOAD    (100)," &-- Preload         
+        "RESERV2    (101)," &
+        "RESERV3    (110)," &
+         "BYPASS    (111) ";
+
+    attribute INSTRUCTION_CAPTURE of CY7C1515KV18: entity is "001";
+
+    attribute INSTRUCTION_PRIVATE of CY7C1515KV18 : entity is
+        "RESERV1, RESERV2, RESERV3";
+
+    attribute IDCODE_REGISTER of CY7C1515KV18 : entity is
+        "000"& -- Reserved for version number
+        "11010011011100100"& -- Defines the type of SRAM
+        "00000110100"& -- Unique ID for SRAM vendor
+        "1";-- ID register Presence indicator
+
+    attribute REGISTER_ACCESS of CY7C1515KV18 : entity is
+        "BOUNDARY    (EXTEST,SAMPLEZ,SAMPLE)," &
+        "BYPASS    (BYPASS)";
+
+    attribute BOUNDARY_LENGTH of CY7C1515KV18 : entity is 109;
+
+    attribute BOUNDARY_REGISTER of CY7C1515KV18 : entity is
+        "0    (BC_4, C_n,    input,    X)," &
+        "1    (BC_4, C,    input,    X)," &
+        "2    (BC_4, A(0),    input,    X)," &
+        "3    (BC_4, A(1),    input,    X)," &
+        "4    (BC_4, A(2),    input,    X)," &
+        "5    (BC_4, A(3),    input,    X)," &
+        "6    (BC_4, A(4),    input,    X)," &
+        "7    (BC_4, A(5),    input,    X)," &
+        "8    (BC_4, A(6),    input,    X)," &
+        "9    (BC_7, Q(0),    bidir,    X, 108, 0, Z), " &
+        "10    (BC_4, D(0),    input,    X)," &
+        "11    (BC_4, D(9),    input,    X)," &
+        "12    (BC_7, Q(9),    bidir,    X, 108, 0, Z)," &
+        "13    (BC_7, Q(1),    bidir,    X, 108, 0, Z), " &
+        "14    (BC_4, D(1),    input,    X)," &
+        "15    (BC_4, D(10),    input,    X)," &
+        "16    (BC_7, Q(10),    bidir,    X, 108, 0, Z)," &
+        "17    (BC_7, Q(2),    bidir,    X, 108, 0, Z), " &
+        "18    (BC_4, D(2),    input,    X)," &
+        "19    (BC_4, D(11),    input,    X)," &
+        "20    (BC_7, Q(11),    bidir,    X, 108, 0, Z)," &
+        "21    (BC_7, Q(3),    bidir,    X, 108, 0, Z), " &
+        "22    (BC_4, D(3),    input,    X)," &
+        "23    (BC_4, D(12),    input,    X)," &
+        "24    (BC_7, Q(12),    bidir,    X, 108, 0, Z)," &
+        "25    (BC_7, Q(4),    bidir,    X, 108, 0, Z), " &
+        "26    (BC_4, D(4),    input,    X)," &
+        "27    (BC_4, ZQ,    input,    X)," &
+        "28    (BC_4, D(13),    input,    X)," &
+        "29    (BC_7, Q(13),    bidir,    X, 108, 0, Z), " &
+        "30    (BC_7, Q(5),    bidir,    X, 108, 0, Z), " &
+        "31    (BC_4, D(5),    input,    X)," &
+        "32    (BC_4, D(14),    input,    X)," &
+        "33    (BC_7, Q(14),    bidir,    X, 108, 0, Z)," &
+        "34    (BC_7, Q(6),    bidir,    X, 108, 0, Z), " &
+        "35    (BC_4, D(6),    input,    X)," &
+        "36    (BC_4, D(15),    input,    X)," &
+        "37    (BC_7, Q(15),    bidir,    X, 108, 0, Z)," &
+        "38    (BC_7, Q(7),    bidir,    X, 108, 0, Z), " &
+        "39    (BC_4, D(7),    input,    X)," &
+        "40    (BC_4, D(16),    input,    X)," &
+        "41    (BC_7, Q(16),    bidir,    X, 108, 0, Z)," &
+        "42    (BC_7, Q(8),    bidir,    X, 108, 0, Z), " &
+        "43    (BC_4, D(8),    input,    X)," &
+        "44    (BC_4, D(17),    input,    X)," &
+        "45    (BC_7, Q(17),    bidir,    X, 108, 0, Z)," &
+        "46    (BC_9, CQ,    output2,    X)," &
+        "47    (BC_4, *,    internal,    X)," &
+        "48    (BC_4, A(7),    input,    X)," &
+        "49    (BC_4, A(8),    input,    X)," &
+        "50    (BC_4, A(9),    input,    X)," &
+        "51    (BC_4, *,     internal,    X)," &
+        "52    (BC_4, RPS_n,    input,    X)," &
+        "53    (BC_4, BWS1_n,    input,    X)," &
+        "54    (BC_4, BWS0_n,    input,    X)," &
+        "55    (BC_4, K,    input,    X)," &
+        "56    (BC_4, K_n,    input,    X)," &
+        "57    (BC_4, BWS3_n,    input,    X)," &
+        "58    (BC_4, BWS2_n,    input,    X)," &
+        "59    (BC_4, WPS_n,    input,    X)," &
+        "60    (BC_4, A(10),    input,    X)," &
+        "61    (BC_4, A(11),    input,    X)," &
+        "62    (BC_4, A(12),    input,    X)," &
+        "63    (BC_4, *,    internal,    X)," &
+        "64    (BC_9, CQ_n,    output2,    X)," &
+        "65    (BC_7, Q(18),    bidir,    X, 108, 0, Z), " &
+        "66    (BC_4, D(18),    input,    X)," &
+        "67    (BC_4, D(27),    input,    X)," &
+        "68    (BC_7, Q(27),    bidir,    X, 108, 0, Z)," &
+        "69    (BC_7, Q(19),    bidir,    X, 108, 0, Z), " &
+        "70    (BC_4, D(19),    input,    X)," &
+        "71    (BC_4, D(28),    input,    X)," &
+        "72    (BC_7, Q(28),    bidir,    X, 108, 0, Z)," &
+        "73    (BC_7, Q(20),    bidir,    X, 108, 0, Z), " &
+        "74    (BC_4, D(20),    input,    X)," &
+        "75    (BC_4, D(29),    input,    X)," &
+        "76    (BC_7, Q(29),    bidir,    X, 108, 0, Z)," &
+        "77    (BC_7, Q(21),    bidir,    X, 108, 0, Z), " &
+        "78    (BC_4, D(21),    input,    X)," &
+        "79    (BC_4, D(30),    input,    X)," &
+        "80    (BC_7, Q(30),    bidir,    X, 108, 0, Z)," &
+        "81    (BC_7, Q(22),    bidir,    X, 108, 0, Z), " &
+        "82    (BC_4, D(22),    input,    X)," &
+        "83    (BC_4, DOFF_N,    input,    X)," &
+        "84    (BC_4, D(31),    input,    X)," &
+        "85    (BC_7, Q(31),    bidir,    X, 108, 0, Z), " &
+        "86    (BC_7, Q(23),    bidir,    X, 108, 0, Z), " &
+        "87    (BC_4, D(23),    input,    X)," &
+        "88    (BC_4, D(32),    input,    X)," &
+        "89    (BC_7, Q(32),    bidir,    X, 108, 0, Z)," &
+        "90    (BC_7, Q(24),    bidir,    X, 108, 0, Z), " &
+        "91    (BC_4, D(24),    input,    X)," &
+        "92    (BC_4, D(33),    input,    X)," &
+        "93    (BC_7, Q(33),    bidir,    X, 108, 0, Z)," &
+        "94    (BC_7, Q(25),    bidir,    X, 108, 0, Z), " &
+        "95    (BC_4, D(25),    input,    X)," &
+        "96    (BC_4, D(34),    input,    X)," &
+        "97    (BC_7, Q(34),    bidir,    X, 108, 0, Z)," &
+        "98    (BC_7, Q(26),    bidir,    X, 108, 0, Z), " &
+        "99    (BC_4, D(26),    input,    X)," &
+        "100    (BC_4, D(35),    input,    X)," &
+        "101    (BC_7, Q(35),    bidir,    X, 108, 0, Z)," &
+        "102    (BC_4, A(13),    input,    X)," &
+        "103    (BC_4, A(14),    input,    X)," &
+        "104    (BC_4, A(15),    input,    X)," &
+        "105    (BC_4, A(16),    input,    X)," &
+        "106    (BC_4, A(17),    input,    X)," &
+        "107    (BC_4, A(18),    input,    X)," &
+        "108    (BC_2, *,    controlr,    0)";
+
+end CY7C1515KV18;
